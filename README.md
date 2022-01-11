@@ -1,6 +1,15 @@
-# PhysicsExperimentReports
-The repository is named 'PhysicsExperimentReports' cuz I think such reports could be universal templates for general physics experiments, while the reports are all about modern physics experiments
+# 近代物理实验报告
 
-All the Latex projects named 'PhyExLabx-x.zip' in diretory 'Experiment x-x' can be uploaded to [Overleaf](https://www.overleaf.com/project) and compiled directly by XeLaTeX
+(既然内容是中文的, 干脆README也用中文写)
 
-The directory 'Analysis & Visualization' in each directory 'Experiment x-x' includes the data analyzing codes and the producted graphs
+and compiled directly by XeLaTeX
+
+这个库是北大物院近代物理实验课本人的报告以及数据分析代码, 我属于那种不会做实验也不会写报告只能研究研究数据分析和作图的人, 所以也是献丑开源.
+
+可以把每个实验目录里的.zip打包文件上传到[Overleaf](https://www.overleaf.com/project), 并用XeLaTex编译即得实验报告(目录里的.pdf文件就是我交上去的版本); Analysis&Visualization是用python分析数据和作图的目录(比较凌乱).
+
+在这个过程中主要磨练了很多matplotlib画图的技巧和各种python数据分析库的运用, 以及LaTeX的掌握也日趋完善.
+
+总的来说, 这些实验报告模板并不是官方推荐的, 具有强烈的个人主义风格(甚至被某老师建议改用官方接近paper风格的模板), 但我还是坚持写完了整个学期.
+
+当然, 正如我前面所言, 我是一个实验动手能力很差的人, 所以实验报告也不值得当成什么典范, 但如果其中的内容能帮助你节约一点浪费在物理实验报告上的垃圾时间, 我会感觉万分荣幸.
