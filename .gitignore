@@ -1,0 +1,9 @@
+# dependencies
+
+# production
+__pycache__/
+
+# misc 
+.DS_Store
+.ipynb_checkpoints/
+
