@@ -1,0 +1,355 @@
+\documentclass[a4paper]{article}
+
+\input{style/ch_xelatex.tex}
+\input{style/scala.tex}
+
+\lstset{frame=,basicstyle={\footnotesize\ttfamily}}
+
+
+
+\graphicspath{ {images/} }
+\usepackage{ctex}
+\usepackage{verbatim}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{pifont}%\ding{192} \ding{172}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{enumerate}
+\usepackage{cite}
+%\usepackage{graphicx}
+%\geometry{a4paper, scale=0.72}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BEGIN DOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\renewcommand{\contentsname}{目\ 录}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\appendixpagename}{附录}
+\renewcommand{\refname}{参考文献} 
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\newcommand{\refeq}[1]{\textbf{Eq.(\ref{#1})}}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+    circle (.5em) node {\makebox[1em][c]{\small #1}};}}
+    
+\title{{\Huge 近代物理实验报告{\large\linebreak\\}}{\Large 实验10-1:\ 非线性热对流斑图\linebreak\linebreak}}
+%please write your name, Student #, and Class # in Authors, student ID, and class # respectively
+\author{\\姓\ 名:付\ 大\ 为\\
+学\ 号: 1800011105\\
+邮\ 箱: \url{fudw@pku.edu.cn}\\
+%班\ 号: xxxxx\\\\
+近代物理实验 (II)\\
+(2022，春季学期)\\\\
+北京大学\\
+物理学院\\
+2018级1班}
+\date{\today}
+\maketitle
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+{\Large\bf{摘\ 要\\}}
+\end{center}
+
+热对流是自然界中常见的现象,具有通常所熟知的“热对流上升,冷流体下降”的流动基本特征.最简单的例子就是盛水容器底部加热所观测到的热对流和沸腾现象.因为热力分布的不均匀,造成了流体中的温差,而温差又可引起流体的密度差,于是在重力场中相应地出现了阿基米德浮力,最后驱动热对流的产生.1900年,贝纳对具有自由面-固壁底层的流体薄层进行了热对流实验,观测到各种对流图形.耗散结构理论的提出使得人们对此类问题有了更系统更深入的认识.
+
+本实验通过观察Rayleigh–Bénard对流现象的产生、发展和演化过程，了解耗散结构理论及非线性动力学的基本内容。具体而言，实验中通过控制 \SI{2}{\mm}, \SI{4}{\mm} 薄层去离子水的上下表面温差，观察到了非线性对流从无到有、从稳定有序到失稳湍流的转变过程，并借此图像定性地分析了系统相应结构的特征。
+\\\\
+{\bf{关键词}:}\ 热对流,非线性斑图,耗散
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONTENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{center}
+\tableofcontents\label{c}
+\end{center}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Introduction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{引言} \label{overview}%------------------------------
+自然界中存在丰富的自组织现象，即由局域的相互作用、从无序初态出发，自发地产生出更大尺度上的有序结构。常见的例子有热对流结构（\textit{如大气环流}），结晶过程（\textit{如冰晶形成}），化学振荡（\textit{如碘钟}），生命过程（\textit{大至进化，小至蛋白质的合成与折叠}）等等。从对称性的角度上看，自组织现象往往与所谓\mbox{\textit{自发对称性破缺}}密切相关；这一观点在理论物理当中十分关键，它描述了统一理论到各种相互作用的过渡，如电弱（electroweak）理论到电、弱相互作用的分离过程。
+	
+由于考虑的往往是开放系统，上述现象与热力学第二定律暗示的无序演化恰好相反。虽说上述自组织现象往往可以通过具体的动力学加以分析，人们更希望以一种统一的语言对上述规律加以描述。正是基于此，Ilya Prigogine于上世纪60年代发展出了耗散结构（dissipative structure）理论, 这一工作于1977年获得Nobel化学奖。
+
+据教材, 耗散结构理论表明，当开放系统偏离平衡达一定程度时，系统将会出现分岔行为，此后系统将离开原先无序的热力学分支，发生突变进入到一个全新的稳定有序状态，此即耗散结构；若将系统拉开到离平衡态更远的地方，系统可能出现更多新的稳定有序状态。理论指出，系统从无序状态过渡到耗散结构有两个必要条件：
+\begin{enumerate}[1.]
+\item \textbf{系统必须开放}，与外界进行物质或能量交换；
+\item \textbf{系统必须远离平衡}，突破近平衡的线性动力学而采用非线性动力学。
+\end{enumerate}
+
+动力学上，在系统的非线性效应很小时，系统内部出现的随机涨落会衰减，但当系统的非线性效应不可忽略时，系统内部的产生的随机涨落会会逐渐变大，自组织后形成稳定的耗散结构。
+	
+本实验观察的Rayleigh–Bénard对流正是耗散结构的一个具体实例。对流由薄液层的上下温差驱动，在突破静态的稳定临界条件时出现；此时通过阴影法可观察到有序的斑图。当温差过大时，耗散结构崩溃而被湍流所取代。本实验通过观察对流版图的形成与演化，以初步了解非线性动力学的基本特征，同时检验耗散结构的上述特性。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theory %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{理论} \label{theory}%------------------------------
+研究在上下相隔$d$的两个平面之间所夹住的一薄层液体中的热对流现象.上下两边界为水平,温度分别维持
+为$T$和$T+\Delta T$($\Delta T > 0$).这一热对流系统满足Boussinesq条件,相应的热对
+流基本方程组和边界条件如下
+
+\begin{equation}
+    \begin{cases}
+        \frac{\partial \vec{V}}{\partial t} + \vec{V} \cdot \nabla\vec{V} =
+        g\alpha T\hat{z} - \frac{1}{\rho}\nabla p + \gamma\nabla^2\vec{V} \\
+        \nabla\cdot\vec{V} = 0 \\
+        \frac{\partial \theta}{\partial t} + \vec{u}\cdot\nabla\theta =
+        \kappa\nabla^2 T
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+    \begin{cases}
+        T(z = -d/2) = T + \Delta T \\
+        T(z = d/2) = T \\
+        \vec{V} = 0, z = \pm d/2
+    \end{cases}
+\end{equation}
+
+对于这一定解问题可以做线性稳定性分析,通过对定态解施加围绕,讨论微扰的线性发展.
+
+理论推导给出的结果指出,参数$R$瑞利系数
+\begin{equation}
+    R = \frac{g\alpha d^3\Delta T}{\kappa\gamma}
+\end{equation}
+是决定系统非线性特性的重要参量.数值计算结果则给出,$R$存在临界值
+\begin{equation}
+    R_c = 1707.76, \alpha_c = 3.117
+\end{equation}
+即是说,当系统的条件可以满足$R<R_c$时, 系统出现的随机扰动噪声会随时间演化消失,从
+而不会出现非线性对流现象;而系统的条件满足$R>R_c$时,系统出现的随机扰动的非线性效
+应将不会能够忽略,从而将会出现非线性对流现象与非线性斑图.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{实验} \label{experiment}%------------------------------
+\subsection{实验仪器}\label{sub:instruments}
+\begin{itemize}
+\item{\textbf{CCD}}
+\item{\textbf{电脑}}
+\item{\textbf{接收屏}}
+\item{\textbf{半反半透镜}}
+\item{\textbf{凸透镜}}
+\item{\textbf{扩束镜}}
+\item{\textbf{激光}}
+\item{\textbf{铜盘}}
+\item{\textbf{硅胶加热片}}
+\item{\textbf{控温计}}
+\item{\textbf{电流表}}
+\end{itemize}
+
+%------------------------------------------------------------
+\subsection{简要实验步骤}\label{sub:ExperimentalSteps}
+分为以下几个步骤:\\\\
+\circled{1}调整光路,使得接收屏上出现圆形红色图案.并开启电脑,进入winXP系统,打开桌面上软件,观察接收屏上的图像\\\\
+\circled{2}接通水泵的开关,确定上层降温水层流动正常,观察出水口是否有水流出\\\\
+\circled{3}确定待观测对流水层(置于铜盘和蓝宝石片之间的用黑色圆环,厚为2mm,固定的水层)已加好\\\\
+\circled{4}开启温控仪,温控仪A的数字显示对流水层上表面的当前温度,即室温.温控仪B的数字显示为对流水层下表面温度,未加热时应为室温\\\\
+\circled{5}开启制冷机、控制水箱内水温、较室温略低即可,此温度一致控制不变,保持恒定\\\\
+\circled{6}改变硅胶片加热电流,从而改变温度差,观察并记录温差和相对应的稳定斑图\\\\
+\circled{7}重置4mm圆环的厚度水层,观察版图随温差增加的状态演化\\\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Results & Discussions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{结果及讨论}
+%------------------------------------------------------------
+\subsection{观察2mm圆环的厚度水层上斑图随温差增加的状态演化}\label{sub:1}
+加水后开始时斑图如下\textbf{图\ref{result:fig1}}所示结果 
+\begin{figure}[H]
+ \centering
+ \caption{I=0.001A,\ $\Delta T=\SI{0.8}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/25.3_26.1_0.001_3.19.bmp}
+ \label{result:fig1}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig2}}所示结果 
+\begin{figure}[H]
+ \centering
+ \caption{I=0.199A,\ $\Delta T=\SI{1.2}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/25.5_26.7_0.199_3.30.bmp}
+ \label{result:fig2}
+\end{figure}
+以上两张图可以看出还没有任何斑图出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig3}}所示结果 
+\begin{figure}[H]
+ \centering
+ \caption{I=0.698A,\ $\Delta T=\SI{4.1}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/27.3_31.4_0.698_3.40.bmp}
+ \label{result:fig3}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig4}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.751A,\ $\Delta T=\SI{5.3}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/28.1_33.4_0.751_3.50.bmp}
+ \label{result:fig4}
+\end{figure}
+以上两张图可以看出仍然没有任何斑图出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig5}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.800A,\ $\Delta T=\SI{6.1}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/28.9_35.0_0.800_4.00.bmp}
+ \label{result:fig5}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig6}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.846A,\ $\Delta T=\SI{6.7}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/31.0_37.7_0.846_4.36.bmp}
+ \label{result:fig6}
+\end{figure}
+以上两张图可以看到已经接近斑图出现的临界区域
+\newpage
+接着演化到如下\textbf{图\ref{result:fig7}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.903A,\ $\Delta T=\SI{7.2}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/31.8_39.0_0.903_4.47.bmp}
+ \label{result:fig7}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig8}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=1.196A,\ $\Delta T=\SI{9.9}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/34.6_44.5_1.196_5.00.bmp}
+ \label{result:fig8}
+\end{figure}
+以上两张图可以看到较清晰的斑图图样出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig9}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=1.490A,\ $\Delta T=\SI{13.3}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/38.4_51.7_1.490_5.11.bmp}
+ \label{result:fig9}
+\end{figure}
+这张图可以看到非常清晰的斑图图样出现,此时的上下表面温度差已经超过了斑图出现的阈值
+%------------------------------------------------------------
+\subsection{观察4mm圆环的厚度水层上斑图随温差增加的状态演化}\label{sub:2}
+加水后开始时斑图如下\textbf{图\ref{result:fig10}}所示结果 
+\begin{figure}[H]
+ \centering
+ \caption{I=0.001A,\ $\Delta T=\SI{0.7}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/30.9_31.6_0.001_5.43.bmp}
+ \label{result:fig10}
+\end{figure}
+这张图可以看出还没有任何斑图出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig11}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.203A,\ $\Delta T=\SI{0.7}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/30.7_31.4_0.203_5.51.bmp}
+ \label{result:fig11}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig12}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.599A,\ $\Delta T=\SI{2.2}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/32.0_34.2_0.599_6.07.bmp}
+ \label{result:fig12}
+\end{figure}
+以上两张图可以看出仍然没有任何斑图出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig13}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=0.793A,\ $\Delta T=\SI{3.5}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/33.7_37.2_0.793_6.18.bmp}
+ \label{result:fig13}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig14}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=1.092A,\ $\Delta T=\SI{5.4}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/36.9_42.3_1.092_6.27.bmp}
+ \label{result:fig14}
+\end{figure}
+以上两张图可以看到已经接近斑图出现的临界区域,并且有初步清晰的斑图出现
+\newpage
+接着演化到如下\textbf{图\ref{result:fig15}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=1.486A,\ $\Delta T=\SI{9.2}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/43.0_52.2_1.486_6.40.bmp}
+ \label{result:fig15}
+\end{figure}
+接着演化到如下\textbf{图\ref{result:fig16}}所示结果
+\begin{figure}[H]
+ \centering
+ \caption{I=1.787A,\ $\Delta T=\SI{11.8}{\celsius}$}
+ \includegraphics[height=8cm, width=10cm]{images/48.0_59.8_1.787_6.47.bmp}
+ \label{result:fig16}
+\end{figure}
+以上两张图可以看到非常清晰的斑图图样出现,此时的上下表面温度差已经超过了斑图出现的阈值
+%add more subsections for other block
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{结论}\label{conclusions}
+本实验通过考察耗散结构的经典实例：Rayleigh–Bénard对流斑图；实验中比较了$d = \SI{2}{\mm},\SI{4}{\mm}$薄层去离子水的上下表面温差，观察分析了斑图形成至崩溃的过程，认识并检验了耗散结构的基本特征，初步了解了非线性动力学的分析手段。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Questions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
+\section{实验报告思考题}\label{questions}
+\subsection{在$a=23.0mm$、$b=10.0mm$的矩形波导管中能不能传播$\lambda=2cm$、$3cm$和$5cm$的微波？各能传播哪些波型？}\label{sub:question1}
+答:根据
+\begin{equation}
+    \lambda_c=\frac{2}{\sqrt{(m/a)^2+(n/b)^2}}
+\end{equation}
+我们可以算出可传播的最大波长为$\lambda_{max}=18.3mm$，显然不能传播$\lambda=2cm$、$3cm$和$5cm$的微波，可传输波长在$\lambda_{max}=18.3mm$以下，满足$\lambda_c=\frac{2}{\sqrt{(m/a)^2+(n/b)^2}}$的波长的波型\\
+
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Acknowledgements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{致谢}\label{acknowledgments}
+感谢老师在实验中的的悉心指导.
+
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section{代码}\label{sub:app.code}
+请在附录\ref{sub:app.code}中添加代码。请使用如下Scala的语法高亮描述方法。
+\begin{scala}
+class TopIO extends Bundle() {
+	val boot = Input(Bool()) 
+// imem and dmem interface for Tests
+	val test_im_wr		= Input(Bool())
+	val test_im_rd 		= Input(Bool())
+	val test_im_addr 	= Input(UInt(32.W))
+	val test_im_in 		= Input(UInt(32.W))
+	val test_im_out 	= Output(UInt(32.W))
+
+	val test_dm_wr		= Input(Bool())
+	val test_dm_rd 		= Input(Bool())
+	val test_dm_addr 	= Input(UInt(32.W))
+	val test_dm_in 		= Input(UInt(32.W))
+	val test_dm_out 	= Output(UInt(32.W))
+
+	val valid			= Output(Bool())
+}
+class Top extends Module() {
+	val io 		= IO(new TopIO())//in chisel3, io must be wrapped in IO(...) 
+	//...
+	when (io.boot & io.test_im_wr){
+		imm(io.test_im_addr) := io.test_im_in
+		} .elsewhen (io.boot & io.test_dm_wr){
+		// please finish it
+		} //...
+}
+\end{scala}
+\newpage
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{unsrt}
+\bibliography{Ref}
+\nocite{*}
+
+\end{document}
+
