@@ -1,5 +1,12 @@
-# 近代物理实验报告
+# Lab Reports for 'Modern Physics Laboratory' (I & II) courses in PKU
 
-could be compiled directly by XeLaTeX
+To have access to each lab report, you could upload `Lab*/*.zip` files onto [Overleaf](https://www.overleaf.com/project) and compile them by **XeLaTeX**
 
-可以把每个实验目录里的.zip打包文件上传到[Overleaf](https://www.overleaf.com/project), 并用XeLaTex编译即得实验报告(目录里的.pdf文件就是我交上去的版本); Analysis&Visualization是用python分析数据和作图的目录(比较凌乱).
+ATTENTION: The author of such reports is not good at experiments so nothing is guaranteed to be right in this repo!
+---
+Other related resources:
+[bryango/PKUModernPhyLabReport_LaTeX](https://github.com/bryango/PKUModernPhyLabReport_LaTeX)
+[chaserhkj/ModPhyLab](https://github.com/chaserhkj/ModPhyLab)
+[lh1962/ModernPhysicsExperiment_PKU](https://github.com/lh1962/ModernPhysicsExperiment_PKU)
+[PhyM73/ModernExperimentI](https://github.com/PhyM73/ModernExperimentI)
+
