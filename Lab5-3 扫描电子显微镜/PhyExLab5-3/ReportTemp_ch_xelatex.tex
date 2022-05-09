@@ -1,0 +1,372 @@
+\documentclass[a4paper]{article}
+
+\input{style/ch_xelatex.tex}
+\input{style/scala.tex}
+
+\lstset{frame=,basicstyle={\footnotesize\ttfamily}}
+
+%\graphicspath{ {images/} }
+\usepackage{ctex,verbatim,geometry,amsmath,tikz,float,booktabs,bm,siunitx,enumerate,cite,diagbox}
+\usepackage{pifont}%\ding{192} \ding{172}
+%\usepackage{graphicx}
+%\geometry{a4paper, scale=0.72}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BEGIN DOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\renewcommand{\contentsname}{目\ 录}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\appendixpagename}{附录}
+\renewcommand{\refname}{参考文献} 
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\newcommand{\refeq}[1]{\textbf{Eq.(\ref{#1})}}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+    circle (.5em) node {\makebox[1em][c]{\small #1}};}}
+    
+\title{{\Huge 近代物理实验报告{\large\linebreak\\}}{\Large 实验5-3:\ 扫描电子显微镜\linebreak\linebreak}}
+%please write your name, Student #, and Class # in Authors, student ID, and class # respectively
+\author{\\姓\ 名:付\ 大\ 为\\
+学\ 号: 1800011105\\
+邮\ 箱: \url{fudw@pku.edu.cn}\\
+近代物理实验 (II)\\
+(2022，春季学期)\\\\
+北京大学\\
+物理学院\\
+2018级1班}
+\date{\today}
+\maketitle
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+{\Large\bf{摘\ 要\\}}
+\end{center}
+
+扫描电子显微镜是研究物质微观形貌及组分的重要实验装置。本实验回顾了扫描电镜的基本结构、工作原理及调节办法，在此基础上探究了驱动电子透镜中的聚光镜电流对成像质量的影响。
+	
+具体而言，本实验考察了400$\sim$650 范围内、间隔步长50的6个聚光镜电流值对应的\SI{1}{k} 和 \SI{10}{k} 倍放大图像，用直观及半定量（频谱分析）的办法比较了图像的像质。结果表明，随电流增大，图像分辨率增大；且在聚光镜电流较大的情况下，噪声对像质有所影响。这一结果与初步的理论分析基本吻合。
+\\\\
+{\bf{关键词}:}\ 扫描电子显微镜(SEM),\ 电子透镜,\ 聚光镜电流,\ 分辨率
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONTENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{center}
+\tableofcontents\label{c}
+\end{center}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Introduction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{引言}\label{overview}%------------------------------
+
+1900年前后，最好的光学显微镜分辨率已接近其理论极限$\sim\SI{200}{\nm}$, 这一限制源于光的衍射行为及可见光的波长下限。为了制造更高分辨率的显微镜以看清更小层次的物质，人们不得不从新的思路出发突破该瓶颈。
+	
+
+1924年前后，为了解决旧量子论中难以调和的诸多困难，德布罗意（Louis de Broglie）在其发表的博士论文 \cite{de1924recherches} 中提出了一种全新的量子化思路；德布罗意由爱因斯坦的光量子假定出发，推而广之，认为实物粒子同样具有波粒二象性，其\textit{相波}（phase wave）波长为：
+\begin{equation}
+	\lambda = \frac{h}{p}
+\end{equation}
+该关系式与光量子的动量公式$p = \frac{h}{\lambda}$完全一致。对于电子而言，在非相对论情形下，$p = \sqrt{2mE} = \sqrt{2meU}$, 其中$U$为加速电压，则有：
+\begin{equation}
+    \lambda \approx \sqrt{\frac{\SI{150}{V}}{U}}\si{\angstrom}
+\end{equation}\label{eq:deBroglieLambda}
+	
+相波的假定确认了实物粒子可类比电磁波进行研究，即电子束的运动可与光束的传播类比；且据 \eqref{eq:deBroglieLambda}, 高能电子的相波波长可以显著小于可见光波长，这启示我们可以实物粒子为媒介进行显微探测，从而突破可见光的分辨极限。
+	
+物质的波动性随后便得到了实验证实\footnote{例如，参见\cite{thomson1927diffraction}. }，并由薛定谔（E. Schrödinger）、波恩（M. Born）等人在理论上严格化。在此基础上，类比光学显微镜，考虑电子\CJKunderdot{透射}，人们设计了\textit{透射电子显微镜}（TEM\footnote{TEM是transmission electron microscopy的缩写。}），这于1932年前后首次实现，随后不久便获得了高于光学显微镜的分辨率\cite{ruska1980early}；利用电子在表面上的“反射”（严谨而言，是偏角充分大的各类散射），进一步设计了\textit{扫描电子显微镜}（scanning electron microscope, SEM）。
+	
+SEM利用\textit{电子光学}原理，以电子束代替光束对样品表面进行扫描，收集散射电子及X射线等辐射信号、样品电流信号并加以分析，从而获得样品表面结构、分析样品基本成分。
+	
+在SEM的发明过程中，德国物理学家Max Knoll做出了重要的探索性的工作（\textit{参见\cite{knoll1935aufladepotentiel}}）；在此基础上，与现代原理基本一致的扫描电子显微镜于随后的1937年由德国物理学家Manfred von Ardenne发明\cite{mcmullan1995scanning}。如今，性能最好的 SEM 分辨率已达到 \SI{.4}{\nm} 以下\supercite{Nanotech86:online}。
+	
+相比传统的光学显微镜，SEM 的信号来源要丰富的多，因而有着更加强大的功能。如今SEM已成为化学、生物、材料等许多领域中的重要显微、分析技术。
+	
+本实验关注SEM最为基本的信号与功能，即利用散射产生的二次电子（secondary electron, SE）进行样品形貌分析；选取了二次电子成像的一项关键参数，即电子聚光镜电流，探究其对成像的影响，从一较小的角度具体展现SEM的基本性能及其决定因素。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theory %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{理论}\label{theory}%------------------------------
+虽说电镜、光学显微镜的类比基础依赖于物质的波动性，但初步的计算分析可利用经典电磁学的方法实现；这实际上是\textit{几何光学极限}的后果，由此分析外场对电子束的作用规律即为（几何）电子光学。具体而言，类比：外加静电磁场$\approx$透镜，起聚光等作用；静电场$\sim$介质，使光线（电子束）发生偏折。此结论基于下述电磁学事实：
+\begin{itemize}
+\item 带电粒子在等电势区内沿直线运动；
+\item 穿过不同电位区的界面时运动方向改变。
+\end{itemize}
+相应地，磁场$\sim$各向异性介质，详见\cite{textbook}. 
+
+定量分析，电子的运动方程可写为作用量形式：
+\begin{equation}
+	\delta\int_\mathcal{L} \mu ds = 0
+\end{equation}
+其中$\mu$为广义动量沿轨迹$\mathcal{L}$的切向分量；此式与几何光学中的费马原理一致。
+
+在非相对论极限下，作为例子，进一步考虑纯静电势$\phi$，略去比例系数，有\cite{textbook}：
+\begin{equation}
+	\mu \simeq \phi^{1/2}
+\end{equation}
+$\mu$即电子光学折射率；与光学折射率$n$相比，$\mu$可变范围广、在空间中连续分布，但分布形式受麦克斯韦方程的约束，不可任取。
+
+在旋转对称、傍轴近似下，电子轨迹方程的解完全类似与几何光学光线。由此构造扫描电镜的电子光学系统。
+
+综上可见，扫描电镜二次电子成像的大致过程为，首先利用电子光学系统使电子束汇聚为充分细的“探针”，偏转电子束方向使电子探针在样品表面扫描，收集对应点逸出的二次电子，进一步分析得到样品表面的形貌。
+
+由此可见，探针的尺度与成像质量密切相关。在其他条件最优化的前提下，探针尺度越纤细，像的分辨程度越高。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Experiment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{实验} \label{experiment}%------------------------------
+\subsection{实验仪器}\label{sub:instruments}
+\begin{itemize}
+\item{\textbf{扫描电子显微镜}}
+
+与光学显微镜不同,扫描电子显微镜中不仅需要电子束替代光学显微镜中的光束,而且是依靠聚焦电子束与样品表面相互作用产生的信号,经收集处理来成像的.它由三部分造成:
+\begin{enumerate}[1.]
+    \item 电子光学系统,包括电子枪、电磁透镜、扫描线圈等.
+    \item 样品室.
+    \item 样品所产生信号的收集、处理和显示系统.
+\end{enumerate}
+\item{\textbf{扩散泵-机械泵机组}
+
+获得真空,工作时镜内真空约为$1.33\times10^{-3}\si{\Pa}$,标称分辨率为$\SI{6.0}{\nano m}$},放大倍率可在15$\sim$25$\times10^4$倍范围内变化.
+\end{itemize}
+\begin{comment}
+%------------------------------------------------------------
+\subsection{简要实验步骤}\label{sub:ExperimentalSteps}
+分为以下几个步骤:\\\\
+\circled{1}熟悉控制和处理程序\\\\
+\circled{2}得到石墨的原子分辨像\\\\
+\circled{3}观察金膜表面\\\\
+\circled{4}标定x、y陶瓷的压电系数\\\\
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Results & Discussions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{结果及讨论}
+%------------------------------------------------------------
+\subsection{10k倍时不同聚光镜电流成像结果}\label{sub:1}
+
+\begin{table}[htbp]
+    \caption{10k倍时不同聚光镜电流对应工作参数}\label{table:1.1}
+    \centering
+    \begin{tabular}{>{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{2cm}}
+    \toprule\toprule
+    \textbf{聚光镜电流i} & \textbf{物镜电流} & \textbf{工作距离/mm} & \textbf{亮度} & \textbf{对比度}\\
+    \midrule
+    400 & 519.03 & 12.0 & -5.7 & 65.1 \\
+    450 & 516.50 & 12.0 & -3.7 & 64.7 \\
+    500 & 516.78 & 12.0 & -3.9 & 65.1 \\
+    550 & 515.70 & 12.0 & 0.0 & 65.9 \\
+    600 & 514.56 & 12.0 & -2.5 & 77.3\\
+    650  & 513.36 & 12.0 & -1.6 & 82.4 \\
+    \bottomrule\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=400$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/400/10k.bmp}
+ \label{result:fig1}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=450$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/450/10k.bmp}
+ \label{result:fig2}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=500$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/500/10k.bmp}
+ \label{result:fig3}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=550$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/550/10k.bmp}
+ \label{result:fig4}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=600$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/600/10k.bmp}
+ \label{result:fig5}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{10k倍,聚光镜电流$i=650$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/650/10k.bmp}
+ \label{result:fig6}
+\end{figure}
+从上述图片可以看出,随着聚光镜电流增加,10k倍数的图像分辨率也逐渐增加,在聚光镜电流i=600左右最清晰.
+%------------------------------------------------------------
+\subsection{1k倍时不同聚光镜电流成像结果}\label{sub:2}
+\begin{table}[htbp]
+    \caption{1k倍时不同聚光镜电流对应工作参数}\label{table:1.1}
+    \centering
+    \begin{tabular}{>{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{2cm}}
+    \toprule\toprule
+    \textbf{聚光镜电流i} & \textbf{物镜电流} & \textbf{工作距离/mm} & \textbf{亮度} & \textbf{对比度}\\
+    \midrule
+    400 & 519.08 & 12.0 & -1.8 & 65.1 \\
+    450 & 516.50 & 12.0 & -2.1 & 64.7 \\
+    500 & 514.45 & 12.0 & -3.5 & 64.7 \\
+    550 & 515.70 & 12.0 & 0.0 & 65.9 \\
+    600 & 514.56 & 12.0 & -1.4 & 71.4\\
+    650  & 513.36 & 12.0 & -1.6 & 82.4 \\
+    \bottomrule\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=400$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/400/1k.bmp}
+ \label{result:fig7}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=450$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/450/1k.bmp}
+ \label{result:fig8}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=500$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/500/1k.bmp}
+ \label{result:fig9}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=550$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/550/1k.bmp}
+ \label{result:fig10}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=600$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/600/1k.bmp}
+ \label{result:fig11}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{1k倍,聚光镜电流$i=650$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/650/1k.bmp}
+ \label{result:fig12}
+\end{figure}
+从上述图片可以看出,随着聚光镜电流增加,1k倍数的图像分辨率先增加后减少,在聚光镜电流i=500左右最清晰.
+%------------------------------------------------------------
+\subsection{聚光镜电流为550时不同工作距离成像结果(对景深影响)}\label{sub:3}
+\begin{table}[htbp]
+    \caption{聚光镜电流为550时不同工作距离对应工作参数}\label{table:1.1}
+    \centering
+    \begin{tabular}{>{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{3cm}%
+    >{\centering\arraybackslash}p{2cm}%
+    >{\centering\arraybackslash}p{2cm}}
+    \toprule\toprule
+    \textbf{聚光镜电流i} & \textbf{物镜电流} & \textbf{工作距离/mm} & \textbf{亮度} & \textbf{对比度}\\
+    \midrule
+    550 & 393.66 & 28.0 & +1.4 & 65.1 \\
+    550 & 659.69 & 5.0 & +1.4 & 65.1 \\
+    \bottomrule\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+ \centering
+ \caption{聚光镜电流$i=550$,工作距离$28.0\si{\macrometer}$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/WorkingDistance/28.bmp}
+ \label{result:fig13}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \caption{聚光镜电流$i=550$,工作距离$5.0\si{\macrometer}$}
+ \includegraphics[height=6.75cm, width=9cm]{pictures/WorkingDistance/5.bmp}
+ \label{result:fig14}
+\end{figure}
+从上述图片可以看出,同样是聚焦在样品上,工作距离为$28.0\si{mm}$时景深更深,能更清晰地看到衬底.可以认为这是因为因为样品到衬底距离一定,相对于$28.0\si{mm}$工作距离更可以忽略,所以看清楚样品的时候时候也能较清晰地看到衬底.
+%add more subsections for other block
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{结论}\label{conclusions}
+本实验探究了SEM的基本构造和原理,并进一步考察了聚光镜电流$i$对分辨率的影响.发现在一定范围内聚光镜电流越大,成像质量越好.实验结果表明,在一定范围内,可以找到最优分辨率,但同时噪声也越显著。对于本仪器（中科科仪KYKY-EM3200型SEM）而言，本文给出建议值$i \approx 500\sim 600$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Questions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
+\section{实验报告思考题}\label{questions}
+\subsection{在$a=23.0mm$、$b=10.0mm$的矩形波导管中能不能传播$\lambda=2cm$、$3cm$和$5cm$的微波？各能传播哪些波型？}\label{sub:question1}
+答:根据
+\begin{equation}
+    \lambda_c=\frac{2}{\sqrt{(m/a)^2+(n/b)^2}}
+\end{equation}
+我们可以算出可传播的最大波长为$\lambda_{max}=18.3mm$，显然不能传播$\lambda=2cm$、$3cm$和$5cm$的微波，可传输波长在$\lambda_{max}=18.3mm$以下，满足$\lambda_c=\frac{2}{\sqrt{(m/a)^2+(n/b)^2}}$的波长的波型\\
+
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Acknowledgements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{致谢}\label{acknowledgments}
+感谢老师在实验中的的悉心指导.
+
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section{代码}\label{sub:app.code}
+请在附录\ref{sub:app.code}中添加代码。请使用如下Scala的语法高亮描述方法。
+\begin{scala}
+class TopIO extends Bundle() {
+	val boot = Input(Bool()) 
+// imem and dmem interface for Tests
+	val test_im_wr		= Input(Bool())
+	val test_im_rd 		= Input(Bool())
+	val test_im_addr 	= Input(UInt(32.W))
+	val test_im_in 		= Input(UInt(32.W))
+	val test_im_out 	= Output(UInt(32.W))
+
+	val test_dm_wr		= Input(Bool())
+	val test_dm_rd 		= Input(Bool())
+	val test_dm_addr 	= Input(UInt(32.W))
+	val test_dm_in 		= Input(UInt(32.W))
+	val test_dm_out 	= Output(UInt(32.W))
+
+	val valid			= Output(Bool())
+}
+class Top extends Module() {
+	val io 		= IO(new TopIO())//in chisel3, io must be wrapped in IO(...) 
+	//...
+	when (io.boot & io.test_im_wr){
+		imm(io.test_im_addr) := io.test_im_in
+		} .elsewhen (io.boot & io.test_dm_wr){
+		// please finish it
+		} //...
+}
+\end{scala}
+\newpage
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{unsrt}
+\bibliography{Ref}
+\nocite{*}
+
+
+\end{document}
+
