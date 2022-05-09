@@ -1,7 +1,7 @@
 ## Lab Reports for *Modern Physics Laboratory (I & II)* courses in PKU
 
 
-`Lab*/*.pdf` files are submitted version. To have access to editing each lab report, you could upload `Lab*/*.zip` files onto [Overleaf](https://www.overleaf.com/project) and compile them by ==XeLaTeX==
+`Lab*/*.pdf` files are submitted version. To have access to editing each lab report, you could upload `Lab*/*.zip` files onto [Overleaf](https://www.overleaf.com/project) and compile them by <mark>XeLaTeX</mark>
 
 ### ATTENTION: The author of such reports is not good at experiments so nothing is guaranteed to be right in this repo!
 
